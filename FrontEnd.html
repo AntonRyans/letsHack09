@@ -30,7 +30,7 @@
             background-color: #6a11cb;
             color: #ffffff;
         }
-        #location, #events {
+        #location, #address, #events {
             margin-top: 20px;
             font-size: 1.5em;
             background: rgba(255, 255, 255, 0.2);
@@ -38,6 +38,8 @@
             border-radius: 10px;
             display: inline-block;
             text-align: left;
+            max-width: 600px;
+            width: 100%;
         }
     </style>
 </head>
@@ -45,9 +47,12 @@
     <h1>Get Your Location</h1>
     <button onclick="getLocation()">Get Location</button>
     <p id="location"></p>
+    <p id="address"></p>
     <div id="events"></div>
 
     <script>
+        const backendUrl = "http://localhost:8000/get_location"; // Adjust if your backend is hosted elsewhere
+
         const events = [
             { name: "Music Festival", latitude: 51.5074, longitude: -0.1278 },
             { name: "Food Market", latitude: 51.5155, longitude: -0.1410 },
@@ -66,10 +71,18 @@
             }
         }
 
-        function showPosition(position) {
+        async function showPosition(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            document.getElementById("location").innerHTML = `Latitude: ${latitude}<br>Longitude: ${longitude}`;
+
+            try {
+                const address = await fetchAddress(latitude, longitude);
+                document.getElementById("address").innerHTML = `Address: ${address}`;
+            } catch (error) {
+                document.getElementById("address").innerHTML = `Error: ${error.message}`;
+            }
+
             findClosestEvents(latitude, longitude);
         }
 
@@ -88,6 +101,23 @@
                     document.getElementById("location").innerHTML = "An unknown error occurred.";
                     break;
             }
+        }
+
+        async function fetchAddress(lat, lon) {
+            const response = await fetch(backendUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ latitude: lat, longitude: lon }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data.address;
         }
 
         function findClosestEvents(userLat, userLon) {
@@ -120,9 +150,68 @@
             closestEvents.forEach(event => {
                 eventsDiv.innerHTML += `<p>${event.name} - ${event.distance.toFixed(2)} km away</p>`;
             });
+            
+            function sendLocationToServer(latitude, longitude) {
+    fetch("http://127.0.0.1:8000/get_location", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ latitude: latitude, longitude: longitude })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        document.getElementById("location").innerHTML = `Address: ${data.address}`;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
+
+// Call this function with the user’s coordinates
+function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    sendLocationToServer(latitude, longitude);
+    findClosestEvents(latitude, longitude);
+}
+function sendLocationToServer(latitude, longitude) {
+    fetch("http://127.0.0.1:8000/get_location", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ latitude: latitude, longitude: longitude })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        document.getElementById("location").innerHTML = `Address: ${data.address}`;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
+fetch("http://127.0.0.1:8000/get_location", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ latitude: latitude, longitude: longitude })
+})
+
+// Call this function with the user’s coordinates
+function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    sendLocationToServer(latitude, longitude);
+    findClosestEvents(latitude, longitude);
+}
+
         }
     </script>
 </body>
 </html>
-
-
