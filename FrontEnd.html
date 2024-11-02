@@ -59,6 +59,27 @@
             const longitude = position.coords.longitude;
             document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
         }
+        // Send coordinates to FastAPI backend
+        fetch('http://127.0.0.1:8000/get_location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ latitude: latitude, longitude: longitude })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Location not found");
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("location").innerHTML += "<br>Address: " + data.address;
+            })
+            .catch(error => {
+                document.getElementById("location").innerHTML += "<br>Error: " + error.message;
+            });
+        
 
         function showError(error) {
             switch (error.code) {
