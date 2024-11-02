@@ -23,6 +23,7 @@ async def get_location(coordinates: Coordinates):
 
     if location:
         print(location.address)
+        return {get_location}
     else:
         raise HTTPException(status_code=404, detail="Location not found")
     
