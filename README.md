@@ -26,6 +26,8 @@ def get_location(ip_address=None):
         "region": data.get("region"),
         "country": data.get("country"),
         "location": data.get("loc")  # Latitude and longitude
+
+       GM API KEY: AIzaSyCMPP-aOe2Y-P1pMgxy_dt7b4k7MvftMGM
     }
     return location
 
