@@ -22,6 +22,8 @@ async def get_location(coordinates: Coordinates):
     location = geolocator.reverse((latitude, longitude), exactly_one=True)
 
     if location:
-        return {"address": location.address}
+        print(location.address)
     else:
         raise HTTPException(status_code=404, detail="Location not found")
+    
+
