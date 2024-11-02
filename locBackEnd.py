@@ -1,65 +1,27 @@
+from flask import Flask, request, jsonify
+from geopy.geocoders import Nominatim
 
-# Importing Necessary Modules
-import requests
-from selenium import webdriver
-import folium
-import datetime
-import time
+app = Flask(__name__)
 
-# this method will return us our actual coordinates
-# using our ip address
+# Initialize the Nominatim geolocator
+geolocator = Nominatim(user_agent="geoapiExercises")
 
-def locationCoordinates():
-    try:
-        response = requests.get('https://ipinfo.io')
-        data = response.json()
-        loc = data['loc'].split(',')
-        lat, long = float(loc[0]), float(loc[1])
-        city = data.get('city', 'Unknown')
-        state = data.get('region', 'Unknown')
-        return lat, long, city, state
-        # return lat, long
-    except:
-        # Displaying ther error message
-        print(&quot;Internet Not avialable&quot;)
-        # closing the program
-        exit()
-        return False
+@app.route('/get_location', methods=['POST'])
+def get_location():
+    data = request.json
+    latitude = data.get('latitude')
+    longitude = data.get('longitude')
 
+    if latitude is not None and longitude is not None:
+        # Perform reverse geocoding
+        location = geolocator.reverse((latitude, longitude), exactly_one=True)
+        
+        if location:
+            return jsonify({"address": location.address}), 200
+        else:
+            return jsonify({"error": "Location not found"}), 404
+    else:
+        return jsonify({"error": "Invalid coordinates"}), 400
 
-# this method will fetch our coordinates and create a html file
-# of the map
-def gps_locator():
-
-    obj = folium.Map(location=[0, 0], zoom_start=2)
-
-    try:
-        lat, long, city, state = locationCoordinates()
-        print(quot;You Are in {},{}&quot;.format(city, state))
-        print(quot;Your latitude = {} and longitude = {}&quot;.format(lat, long))
-        folium.Marker([lat, long], popup='Current Location').add_to(obj)
-
-        fileName = &quot;C:/screengfg/Location&quot; + \
-            str(datetime.date.today()) + &quot;.html&quot;
-
-        obj.save(fileName)
-
-        return fileName
-
-    except:
-        return False
-
-
-# Main method
-if __name__ == &quot;__main__&quot;:
-
-    print(&quot;---------------GPS Using Python---------------\n&quot;)
-
-    # function Calling
-    page = gps_locator()
-    print(&quot;\nOpening File.............&quot;)
-    dr = webdriver.Chrome()
-    dr.get(page)
-    time.sleep(4)
-    dr.quit()
-    print(&quot;\nBrowser Closed..............&quot;)
+if __name__ == '__main__':
+    app.run(debug=True)
