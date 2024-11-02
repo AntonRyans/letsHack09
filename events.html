@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        nav {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .event {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .distance {
+            font-size: 1em;
+            color: #ffcc00; /* Highlight color for distances */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <h1>Upcoming University Events</h1>
+
+    <div id="events">
+        <div class="event">
+            <h3>Art Exhibition</h3>
+            <p><strong>Description:</strong> Explore inspiring artworks at the University of Leicester's Attenborough Arts Centre.</p>
+            <p><strong>Location:</strong> Attenborough Arts Centre</p>
+            <p class="distance">Distance: <span id="distance-art">0.00 km</span></p>
+        </div>
+        <div class="event">
+            <h3>Food Market</h3>
+            <p><strong>Description:</strong> Enjoy delicious food from local vendors at the University of Leicester.</p>
+            <p><strong>Location:</strong> University Square</p>
+            <p class="distance">Distance: <span id="distance-food">0.00 km</span></p>
+        </div>
+        <div class="event">
+            <h3>Craft Fair</h3>
+            <p><strong>Description:</strong> Join us for a day of creativity and crafts at the University of Leicester's Students' Union.</p>
+            <p><strong>Location:</strong> Students' Union</p>
+            <p class="distance">Distance: <span id="distance-craft">0.00 km</span></p>
+        </div>
+        <div class="event">
+            <h3>Tech Conference</h3>
+            <p><strong>Description:</strong> Attend talks and workshops on the latest in technology at the University of Leicester.</p>
+            <p><strong>Location:</strong> Charles Wilson Building</p>
+            <p class="distance">Distance: <span id="distance-tech">0.00 km</span></p>
+        </div>
+        <div class="event">
+            <h3>Outdoor Cinema</h3>
+            <p><strong>Description:</strong> Enjoy classic films under the stars at the University of Leicester.</p>
+            <p><strong>Location:</strong> Oval Lawn</p>
+            <p class="distance">Distance: <span id="distance-cinema">0.00 km</span></p>
+        </div>
+    </div>
+
+    <script>
+        const events = {
+            art: { coordinates: [52.6111, -1.1242] }, // Attenborough Arts Centre
+            food: { coordinates: [52.6088, -1.1264] }, // University Square
+            craft: { coordinates: [52.6096, -1.1266] }, // Students' Union
+            tech: { coordinates: [52.6113, -1.1265] }, // Charles Wilson Building
+            cinema: { coordinates: [52.6116, -1.1250] } // Oval Lawn
+        };
+
+        function haversineDistance(coords1, coords2) {
+            const toRad = (x) => (x * Math.PI) / 180;
+            const R = 6371; // Radius of Earth in kilometers
+            const dLat = toRad(coords2[0] - coords1[0]);
+            const dLon = toRad(coords2[1] - coords1[1]);
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(toRad(coords1[0])) * Math.cos(toRad(coords2[0])) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in kilometers
+        }
+
+        function updateDistances(userCoords) {
+            for (const event in events) {
+                const distance = haversineDistance(userCoords, events[event].coordinates);
+                document.getElementById(`distance-${event}`).textContent = distance.toFixed(2) + " km";
+            }
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userCoords = [position.coords.latitude, position.coords.longitude];
+                    updateDistances(userCoords);
+                }, () => {
+                    alert("Unable to retrieve your location. Please allow location access.");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        window.onload = getLocation; // Automatically get location when the page loads
+    </script>
+</body>
+</html>
