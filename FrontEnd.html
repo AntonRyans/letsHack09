@@ -51,8 +51,9 @@
     <div id="events"></div>
 
     <script>
-        const backendUrl = "http://localhost:8000/get_location"; // Adjust if your backend is hosted elsewhere
+        const backendUrl = "http://127.0.0.1:8000"; // Correct flask endpoint URL
 
+        // Example events with coordinates
         const events = [
             { name: "Music Festival", latitude: 51.5074, longitude: -0.1278 },
             { name: "Food Market", latitude: 51.5155, longitude: -0.1410 },
@@ -63,6 +64,7 @@
             { name: "Craft Fair", latitude: 51.5120, longitude: -0.1300 }
         ];
 
+        // Get user's location
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -71,11 +73,13 @@
             }
         }
 
+        // Handle successful geolocation
         async function showPosition(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             document.getElementById("location").innerHTML = `Latitude: ${latitude}<br>Longitude: ${longitude}`;
 
+            // Fetch address from backend
             try {
                 const address = await fetchAddress(latitude, longitude);
                 document.getElementById("address").innerHTML = `Address: ${address}`;
@@ -83,9 +87,25 @@
                 document.getElementById("address").innerHTML = `Error: ${error.message}`;
             }
 
+            // Find and display closest events
             findClosestEvents(latitude, longitude);
         }
 
+        async function fetchAddress(lat, lon) {
+            const response = await fetch(`${backendUrl}/test`, {
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ latitude: lat, longitude: lon }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch address');
+            }
+            const data = await response.json();
+            return data.address || 'No address found';
+        }
+
+        // Handle geolocation errors
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
@@ -103,23 +123,7 @@
             }
         }
 
-        async function fetchAddress(lat, lon) {
-            const response = await fetch(backendUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ latitude: lat, longitude: lon }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`Server error: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            return data.address;
-        }
-
+        // Find and display the 5 closest events
         function findClosestEvents(userLat, userLon) {
             events.forEach(event => {
                 event.distance = getDistanceFromLatLonInKm(userLat, userLon, event.latitude, event.longitude);
@@ -128,89 +132,31 @@
             displayClosestEvents(events.slice(0, 5));
         }
 
+        // Calculate distance between two lat/lon points in km
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
             const R = 6371; // Radius of the earth in km
             const dLat = deg2rad(lat2 - lat1);
             const dLon = deg2rad(lon2 - lon1);
-            const a = 
+            const a =
                 Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             return R * c; // Distance in km
         }
 
+        // Convert degrees to radians
         function deg2rad(deg) {
             return deg * (Math.PI / 180);
         }
 
+        // Display closest events in the events section
         function displayClosestEvents(closestEvents) {
             const eventsDiv = document.getElementById("events");
             eventsDiv.innerHTML = "<h2>Top 5 Closest Events:</h2>";
             closestEvents.forEach(event => {
                 eventsDiv.innerHTML += `<p>${event.name} - ${event.distance.toFixed(2)} km away</p>`;
             });
-            
-            function sendLocationToServer(latitude, longitude) {
-    fetch("http://127.0.0.1:8000/get_location", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ latitude: latitude, longitude: longitude })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        document.getElementById("location").innerHTML = `Address: ${data.address}`;
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
-}
-
-// Call this function with the user’s coordinates
-function showPosition(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-    sendLocationToServer(latitude, longitude);
-    findClosestEvents(latitude, longitude);
-}
-function sendLocationToServer(latitude, longitude) {
-    fetch("http://127.0.0.1:8000/get_location", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ latitude: latitude, longitude: longitude })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        document.getElementById("location").innerHTML = `Address: ${data.address}`;
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
-}
-fetch("http://127.0.0.1:8000/get_location", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ latitude: latitude, longitude: longitude })
-})
-
-// Call this function with the user’s coordinates
-function showPosition(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-    sendLocationToServer(latitude, longitude);
-    findClosestEvents(latitude, longitude);
-}
-
         }
     </script>
 </body>
