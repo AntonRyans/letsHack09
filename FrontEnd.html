@@ -30,13 +30,14 @@
             background-color: #6a11cb;
             color: #ffffff;
         }
-        #location {
+        #location, #events {
             margin-top: 20px;
             font-size: 1.5em;
             background: rgba(255, 255, 255, 0.2);
             padding: 20px;
             border-radius: 10px;
             display: inline-block;
+            text-align: left;
         }
     </style>
 </head>
@@ -44,8 +45,19 @@
     <h1>Get Your Location</h1>
     <button onclick="getLocation()">Get Location</button>
     <p id="location"></p>
+    <div id="events"></div>
 
     <script>
+        const events = [
+            { name: "Music Festival", latitude: 51.5074, longitude: -0.1278 },
+            { name: "Food Market", latitude: 51.5155, longitude: -0.1410 },
+            { name: "Art Exhibition", latitude: 51.5200, longitude: -0.1550 },
+            { name: "Tech Conference", latitude: 51.5090, longitude: -0.1350 },
+            { name: "Marathon", latitude: 51.5050, longitude: -0.1250 },
+            { name: "Outdoor Cinema", latitude: 51.5085, longitude: -0.1280 },
+            { name: "Craft Fair", latitude: 51.5120, longitude: -0.1300 }
+        ];
+
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -58,28 +70,8 @@
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            findClosestEvents(latitude, longitude);
         }
-        // Send coordinates to FastAPI backend
-        fetch('http://127.0.0.1:8000/get_location', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ latitude: latitude, longitude: longitude })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Location not found");
-                }
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById("location").innerHTML += "<br>Address: " + data.address;
-            })
-            .catch(error => {
-                document.getElementById("location").innerHTML += "<br>Error: " + error.message;
-            });
-        
 
         function showError(error) {
             switch (error.code) {
@@ -97,7 +89,40 @@
                     break;
             }
         }
+
+        function findClosestEvents(userLat, userLon) {
+            events.forEach(event => {
+                event.distance = getDistanceFromLatLonInKm(userLat, userLon, event.latitude, event.longitude);
+            });
+            events.sort((a, b) => a.distance - b.distance);
+            displayClosestEvents(events.slice(0, 5));
+        }
+
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the earth in km
+            const dLat = deg2rad(lat2 - lat1);
+            const dLon = deg2rad(lon2 - lon1);
+            const a = 
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in km
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+
+        function displayClosestEvents(closestEvents) {
+            const eventsDiv = document.getElementById("events");
+            eventsDiv.innerHTML = "<h2>Top 5 Closest Events:</h2>";
+            closestEvents.forEach(event => {
+                eventsDiv.innerHTML += `<p>${event.name} - ${event.distance.toFixed(2)} km away</p>`;
+            });
+        }
     </script>
 </body>
 </html>
+
 
