@@ -72,7 +72,7 @@
     <nav>
         <a href="#">Home</a>
         <a href="events.html">Events</a>
-        <a href="file:///C:/Users/anton/Documents/GitHub/letsHack09/nearby_places_map.html">Maps</a>
+        <a href="file:///C:/Users/anton/Documents/GitHub/letsHack09/nearby_places_map.html" target="_blank">Maps</a>
     </nav>
     <h1>University of Leicester Events </h1>
     <button onclick="getLocation()">Find Events</button>
@@ -129,7 +129,7 @@
         }
 
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Radius of the earth in km
+            const R = 6371; 
             const dLat = deg2rad(lat2 - lat1);
             const dLon = deg2rad(lon2 - lon1);
             const a =
@@ -137,7 +137,7 @@
                 Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c; // Distance in km
+            return R * c; 
         }
 
         function deg2rad(deg) {
