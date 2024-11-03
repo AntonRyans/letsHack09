@@ -29,7 +29,7 @@ for _, place in places_df.iterrows():
     ).add_to(map_)
 
 # Replace this line with a local file path
-map_file_path = "C:/Users/anton/Documents/GitHub/letsHack09/nearby_places_map.html"
+map_file_path = "C:/Users/anton/Documents/GitHub/letsHack09/vkPark.html"
 
 # Save map to HTML file
 map_.save(map_file_path)
