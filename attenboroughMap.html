@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_79c106b176f8d015891f48dd25f21f3d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_79c106b176f8d015891f48dd25f21f3d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_79c106b176f8d015891f48dd25f21f3d = L.map(
+                "map_79c106b176f8d015891f48dd25f21f3d",
+                {
+                    center: [52.6246, -1.1256],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f08244f6a129babff3057ba088e42af4 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_f08244f6a129babff3057ba088e42af4.addTo(map_79c106b176f8d015891f48dd25f21f3d);
+        
+    
+            var marker_e5fb56e2081f6c8d8c5acef48570f150 = L.marker(
+                [52.6246, -1.1256],
+                {}
+            ).addTo(map_79c106b176f8d015891f48dd25f21f3d);
+        
+    
+            var icon_447b904904df2e8d14024e921d54a6c9 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_e5fb56e2081f6c8d8c5acef48570f150.setIcon(icon_447b904904df2e8d14024e921d54a6c9);
+        
+    
+        var popup_bad7780d7744e8196261b41b3067693e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_aed57f95a9fa3600192b5d3064476d33 = $(`<div id="html_aed57f95a9fa3600192b5d3064476d33" style="width: 100.0%; height: 100.0%;"><b>Attenborough Arts Centre</b><br>Attenborough Arts Centre, University of Leicester, Lancaster Rd, Leicester LE1 7HA<br>Rating: 4.7</div>`)[0];
+                popup_bad7780d7744e8196261b41b3067693e.setContent(html_aed57f95a9fa3600192b5d3064476d33);
+            
+        
+
+        marker_e5fb56e2081f6c8d8c5acef48570f150.bindPopup(popup_bad7780d7744e8196261b41b3067693e)
+        ;
+
+        
+    
+</script>
+</html>
