@@ -1,5 +1,10 @@
 import folium 
 import pandas as pd
+import os
+
+# Define the path components
+base_dir = os.path.expanduser("~")  # This points to the user's home directory
+map_file_path = os.path.join(base_dir, "Documents", "GitHub", "letsHack09", "vkPark.html")
 
 # Corrected data with proper coordinates for Leicester area
 data = {
@@ -28,9 +33,7 @@ for _, place in places_df.iterrows():
         icon=folium.Icon(color='blue', icon='info-sign')
     ).add_to(map_)
 
-# Replace this line with a local file path
-map_file_path = "C:/Users/anton/Documents/GitHub/letsHack09/vkPark.html"
 
 # Save map to HTML file
 map_.save(map_file_path)
-print(f"Map has been saved as '{map_file_path}'")
+print(f"Map has been saved. ")
