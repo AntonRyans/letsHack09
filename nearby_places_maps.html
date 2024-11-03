@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_28502da5acf8b12754e8716aaab5314c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_28502da5acf8b12754e8716aaab5314c" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_28502da5acf8b12754e8716aaab5314c = L.map(
+                "map_28502da5acf8b12754e8716aaab5314c",
+                {
+                    center: [52.62242, -1.12338],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f4caad6b089abbd141ec7c0a052463c5 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_f4caad6b089abbd141ec7c0a052463c5.addTo(map_28502da5acf8b12754e8716aaab5314c);
+        
+    
+            var marker_fef60a258e40faf0e5342e48ea86c63e = L.marker(
+                [52.6246, -1.1256],
+                {}
+            ).addTo(map_28502da5acf8b12754e8716aaab5314c);
+        
+    
+            var icon_b62f13b8b748ecca03a6efc20bbfbf56 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_fef60a258e40faf0e5342e48ea86c63e.setIcon(icon_b62f13b8b748ecca03a6efc20bbfbf56);
+        
+    
+        var popup_617b4604a011bc8565a8a80b78e7da4b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9cd6f2cadd2cb5bc36c13df1ff164799 = $(`<div id="html_9cd6f2cadd2cb5bc36c13df1ff164799" style="width: 100.0%; height: 100.0%;"><b>Attenborough Arts Centre</b><br>Attenborough Arts Centre, University of Leicester, Lancaster Rd, Leicester LE1 7HA<br>Rating: 4.7</div>`)[0];
+                popup_617b4604a011bc8565a8a80b78e7da4b.setContent(html_9cd6f2cadd2cb5bc36c13df1ff164799);
+            
+        
+
+        marker_fef60a258e40faf0e5342e48ea86c63e.bindPopup(popup_617b4604a011bc8565a8a80b78e7da4b)
+        ;
+
+        
+    
+    
+            var marker_2722153c6502460ec20b9e8c35987a59 = L.marker(
+                [52.6211, -1.1246],
+                {}
+            ).addTo(map_28502da5acf8b12754e8716aaab5314c);
+        
+    
+            var icon_2919d6302ec40dc7a99453af12d15772 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_2722153c6502460ec20b9e8c35987a59.setIcon(icon_2919d6302ec40dc7a99453af12d15772);
+        
+    
+        var popup_d081dbd26ee518ce5e507b50cd62f351 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fbcfa237c9e64116fdbfff3f7b1a49ff = $(`<div id="html_fbcfa237c9e64116fdbfff3f7b1a49ff" style="width: 100.0%; height: 100.0%;"><b>University Square</b><br>University Square, University Rd, Leicester LE1 7RH<br>Rating: 4.5</div>`)[0];
+                popup_d081dbd26ee518ce5e507b50cd62f351.setContent(html_fbcfa237c9e64116fdbfff3f7b1a49ff);
+            
+        
+
+        marker_2722153c6502460ec20b9e8c35987a59.bindPopup(popup_d081dbd26ee518ce5e507b50cd62f351)
+        ;
+
+        
+    
+    
+            var marker_1e368dddbe3fb272a9686ca84794496b = L.marker(
+                [52.6216, -1.1254],
+                {}
+            ).addTo(map_28502da5acf8b12754e8716aaab5314c);
+        
+    
+            var icon_2c735b7468b0414864c8c98d094339a7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_1e368dddbe3fb272a9686ca84794496b.setIcon(icon_2c735b7468b0414864c8c98d094339a7);
+        
+    
+        var popup_63f7c554e7ad5017f86eb43281e525d3 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d1878c717a0c896dffc44361ab5a6417 = $(`<div id="html_d1878c717a0c896dffc44361ab5a6417" style="width: 100.0%; height: 100.0%;"><b>Students' Union</b><br>University of Leicester Students' Union, Percy Gee Building, University of Leicester, University Rd, Leicester LE1 7RH<br>Rating: 4.6</div>`)[0];
+                popup_63f7c554e7ad5017f86eb43281e525d3.setContent(html_d1878c717a0c896dffc44361ab5a6417);
+            
+        
+
+        marker_1e368dddbe3fb272a9686ca84794496b.bindPopup(popup_63f7c554e7ad5017f86eb43281e525d3)
+        ;
+
+        
+    
+    
+            var marker_27a87463d6c9a2b26ebddfe643d7d917 = L.marker(
+                [52.6218, -1.1236],
+                {}
+            ).addTo(map_28502da5acf8b12754e8716aaab5314c);
+        
+    
+            var icon_5048aa222993a56241f2260d9505580c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_27a87463d6c9a2b26ebddfe643d7d917.setIcon(icon_5048aa222993a56241f2260d9505580c);
+        
+    
+        var popup_a57811594313e91ea77b6aa2b87fd7a9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_250856dd99b02dc3cac0d3b6e8e1d7f7 = $(`<div id="html_250856dd99b02dc3cac0d3b6e8e1d7f7" style="width: 100.0%; height: 100.0%;"><b>Charles Wilson Building</b><br>Charles Wilson Building, University of Leicester, Leicester LE1 7RH<br>Rating: 4.8</div>`)[0];
+                popup_a57811594313e91ea77b6aa2b87fd7a9.setContent(html_250856dd99b02dc3cac0d3b6e8e1d7f7);
+            
+        
+
+        marker_27a87463d6c9a2b26ebddfe643d7d917.bindPopup(popup_a57811594313e91ea77b6aa2b87fd7a9)
+        ;
+
+        
+    
+    
+            var marker_7700387fdc9593061b07966836a19264 = L.marker(
+                [52.623, -1.1177],
+                {}
+            ).addTo(map_28502da5acf8b12754e8716aaab5314c);
+        
+    
+            var icon_78cacc48638c03cadfd40d8f506b0da8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_7700387fdc9593061b07966836a19264.setIcon(icon_78cacc48638c03cadfd40d8f506b0da8);
+        
+    
+        var popup_6d858fb1e534241c6bd349ff1906b591 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1d66c5ea77866bc519e0ac81f511b57d = $(`<div id="html_1d66c5ea77866bc519e0ac81f511b57d" style="width: 100.0%; height: 100.0%;"><b>Victoria Park</b><br>Victoria Park, Granville Rd, Leicester LE1 7RY<br>Rating: 4.6</div>`)[0];
+                popup_6d858fb1e534241c6bd349ff1906b591.setContent(html_1d66c5ea77866bc519e0ac81f511b57d);
+            
+        
+
+        marker_7700387fdc9593061b07966836a19264.bindPopup(popup_6d858fb1e534241c6bd349ff1906b591)
+        ;
+
+        
+    
+</script>
+</html>
