@@ -46,4 +46,5 @@ for _, place in places_df.iterrows():
 
 # Save map to HTML file
 map_.save(map_file_path)
+print(map_file_path)
 print(f"Map has been saved.")
