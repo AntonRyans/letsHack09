@@ -2,9 +2,12 @@ import folium
 import pandas as pd
 import os
 
-# Define the path components
-base_dir = os.path.expanduser("~")  # This points to the user's home directory
-map_file_path = os.path.join(base_dir, "Documents", "GitHub", "letsHack09", "nearby_places_maps.html")
+# Define the file path dynamically, based on the user's home directory
+map_file_path = os.path.join(os.path.expanduser("~"), "Documents", "GitHub", "letsHack09", "nearby_places_maps.html")
+
+# Convert the path to a URI format for HTML (replacing backslashes with forward slashes for compatibility)
+file_url = f"file:///{map_file_path.replace(os.sep, '/')}"
+
 
 # Corrected data with proper coordinates for Leicester area
 data = {
